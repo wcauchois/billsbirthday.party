@@ -1,9 +1,10 @@
 import React from 'react';
+import Field from './Field';
 
 function App() {
   return (
     <div>
-      Hello world
+      <Field />
     </div>
   );
 }
