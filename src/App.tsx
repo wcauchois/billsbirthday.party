@@ -1,10 +1,10 @@
 import React from 'react';
-import Field from './Field';
+import MainGame from './game/MainGame';
 
 function App() {
   return (
     <div>
-      <Field />
+      <MainGame />
     </div>
   );
 }
