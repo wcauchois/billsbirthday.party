@@ -6,6 +6,7 @@ import { Explodable } from "../components/Explodable";
 import { Velocity } from "../components/Velocity";
 import { ConfettiParticle } from "../components/ConfettiParticle";
 import { entityToSat, pointInSat } from "../helpers/collision";
+import { ConfettiParticleBuilder } from "../builders/ConfettiParticleBuilder";
 
 export class ExplodableSystem extends System {
   readonly inputManager: InputManager;
@@ -35,10 +36,9 @@ export class ExplodableSystem extends System {
         if (hit) {
           entity.remove();
           for (let i = 0; i < 100; i++) {
-            this.world.createEntity()
-              .addComponent(Position, { x: position.x, y: position.y })
-              .addComponent(Velocity, { x: Math.random() - 0.5, y: Math.random() - 0.5 })
-              .addComponent(ConfettiParticle);
+            ConfettiParticleBuilder.start()
+              .position(position.x, position.y)
+              .addToWorld(this.world);
           }
         }
       }

@@ -25,6 +25,8 @@ import twentyTwenty3 from '../images/2020/frame-3.png';
 import twentyTwenty4 from '../images/2020/frame-4.png';
 import { Rotation } from "./components/Rotation";
 import { AngularVelocity } from "./components/AngularVelocity";
+import { Decaying } from "./components/Decaying";
+import { DecayingSystem } from "./systems/DecayingSystem";
 const twentyTwentyFrames = [
   twentyTwenty0,
   twentyTwenty1,
@@ -77,7 +79,9 @@ export default function MainGame() {
       .registerComponent(ConfettiParticle)
       .registerComponent(AnimatedSprite)
       .registerComponent(Rotation)
+      .registerComponent(Decaying)
       .registerComponent(AngularVelocity)
+      .registerSystem(DecayingSystem)
       .registerSystem(MovableSystem, { getPaused: () => paused })
       .registerSystem(ExplodableSystem, { inputManager })
       .registerSystem(RendererSystem, { canvas })
@@ -121,7 +125,7 @@ export default function MainGame() {
       */
 
 
-    let animHandle = 0;
+    let handle = 0;
     let lastTime = performance.now();
     function run() {
       const time = performance.now();
@@ -131,12 +135,12 @@ export default function MainGame() {
 
       inputManager.reset();
       lastTime = time;
-      requestAnimationFrame(run);
+      handle = requestAnimationFrame(run);
     }
-    requestAnimationFrame(run);
+    handle = requestAnimationFrame(run);
 
     return () => {
-      cancelAnimationFrame(animHandle)
+      cancelAnimationFrame(handle)
       inputManager.removeListeners();
       window.removeEventListener('keydown', keydownListener);
     };
