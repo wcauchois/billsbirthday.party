@@ -30,6 +30,9 @@ import { DecayingSystem } from "./systems/DecayingSystem";
 import { AsteroidBuilder } from "./builders/AsteroidBuilder";
 import { Important } from "./components/Important";
 import { ImportantSystem } from "./systems/ImportantSystem";
+
+import sars from "../images/sars-transparent.png";
+
 const twentyTwentyFrames = [
   twentyTwenty0,
   twentyTwenty1,
@@ -108,6 +111,18 @@ export default function MainGame({ onDone }: MainGameProps) {
       .frames(...twentyTwentyFrames)
       .width(188)
       .height(88)
+      .addToWorld(world);
+
+    AsteroidBuilder.start(canvas)
+      .frames(sars)
+      .width(100)
+      .height(100)
+      .addToWorld(world);
+
+    AsteroidBuilder.start(canvas)
+      .frames(sars)
+      .width(100)
+      .height(100)
       .addToWorld(world);
       /*
     world
