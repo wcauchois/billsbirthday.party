@@ -13,6 +13,25 @@ import { Shape } from "./components/Shape";
 import { RendererSystem } from "./systems/RendererSystem";
 import { InputManager } from "./managers/InputManager";
 import { Explodable } from "./components/Explodable";
+import { ConfettiParticle } from "./components/ConfettiParticle";
+import { ConfettiParticleRendererSystem } from "./systems/ConfettiParticleRendererSystem";
+import { AnimatedSpriteSystem } from "./systems/AnimatedSpriteSystem";
+import { AnimatedSprite } from "./components/AnimatedSprite";
+
+import twentyTwenty0 from '../images/2020/frame-0.png';
+import twentyTwenty1 from '../images/2020/frame-1.png';
+import twentyTwenty2 from '../images/2020/frame-2.png';
+import twentyTwenty3 from '../images/2020/frame-3.png';
+import twentyTwenty4 from '../images/2020/frame-4.png';
+import { Rotation } from "./components/Rotation";
+import { AngularVelocity } from "./components/AngularVelocity";
+const twentyTwentyFrames = [
+  twentyTwenty0,
+  twentyTwenty1,
+  twentyTwenty2,
+  twentyTwenty3,
+  twentyTwenty4,
+];
 
 export default function MainGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -47,11 +66,29 @@ export default function MainGame() {
       .registerComponent(Bouncable)
       .registerComponent(Renderable)
       .registerComponent(Explodable)
+      .registerComponent(ConfettiParticle)
+      .registerComponent(AnimatedSprite)
+      .registerComponent(Rotation)
+      .registerComponent(AngularVelocity)
       .registerSystem(MovableSystem)
       .registerSystem(ExplodableSystem, { inputManager })
       .registerSystem(RendererSystem, { canvas })
+      .registerSystem(ConfettiParticleRendererSystem, { canvas })
+      .registerSystem(AnimatedSpriteSystem, { canvas })
       .registerSystem(BouncableSystem, { canvas });
 
+    world
+      .createEntity()
+      .addComponent(Position, { x: 100, y: 100 })
+      .addComponent(Rotation, { rotation: 0 })
+      .addComponent(AngularVelocity, { amount: 0.01 })
+      .addComponent(Velocity, { x: 0.1, y: 0.1 })
+      .addComponent(AnimatedSprite, {
+        accumulator: 0,
+        speed: 0.01,
+        frames: twentyTwentyFrames
+      });
+      /*
     world
       .createEntity()
       .addComponent(Position, { x: 100, y: 100 })
@@ -61,6 +98,17 @@ export default function MainGame() {
       .addComponent(Sized, { width: 40, height: 40 })
       .addComponent(Bouncable)
       .addComponent(Renderable);
+
+    world
+      .createEntity()
+      .addComponent(Position, { x: 500, y: 100 })
+      .addComponent(Velocity, { x: -0.1, y: 0.1 })
+      .addComponent(Shape)
+      .addComponent(Explodable)
+      .addComponent(Sized, { width: 40, height: 40 })
+      .addComponent(Bouncable)
+      .addComponent(Renderable);
+      */
 
     let animHandle = 0;
     let lastTime = performance.now();
