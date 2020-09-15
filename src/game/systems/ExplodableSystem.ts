@@ -1,10 +1,11 @@
 import { System, World } from "ecsy";
 import { InputManager, ClickEvent } from "../managers/InputManager";
-import { Sized } from "../components/Sized";
+import { BoundingBox } from "../components/BoundingBox";
 import { Position } from "../components/Position";
 import { Explodable } from "../components/Explodable";
 import { Velocity } from "../components/Velocity";
 import { ConfettiParticle } from "../components/ConfettiParticle";
+import { entityToSat, pointInSat } from "../helpers/collision";
 
 export class ExplodableSystem extends System {
   readonly inputManager: InputManager;
@@ -22,14 +23,14 @@ export class ExplodableSystem extends System {
         continue;
       }
       for (const entity of this.queries.explodable.results) {
-        const sized = entity.getComponent(Sized);
         const position = entity.getComponent(Position)!;
 
-        const halfWidth = (sized?.width ?? ExplodableSystem.DEFAULT_SIZE) / 2;
-        const halfHeight = (sized?.height ?? ExplodableSystem.DEFAULT_SIZE) / 2;
+        const sat = entityToSat(entity);
+        if (!sat) {
+          continue;
+        }
 
-        const hit = event.clientX >= position.x - halfWidth && event.clientX <= position.x + halfWidth &&
-          event.clientY >= position.y - halfHeight && event.clientY <= position.y + halfHeight;
+        const hit = pointInSat(sat, event.clientX, event.clientY);
 
         if (hit) {
           entity.remove();

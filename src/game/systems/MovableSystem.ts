@@ -1,11 +1,22 @@
-import { System } from "ecsy";
+import { System, World } from "ecsy";
 import { Velocity } from "../components/Velocity";
 import { Position } from "../components/Position";
 import { Rotation } from "../components/Rotation";
 import { AngularVelocity } from "../components/AngularVelocity";
 
 export class MovableSystem extends System {
+  private readonly getPaused: () => boolean;
+
+  constructor(world: World, attributes: { getPaused(): boolean; }) {
+    super(world);
+    this.getPaused = attributes.getPaused;
+  }
+
   execute(delta: number, time: number) {
+    if (this.getPaused()) {
+      return;
+    }
+
     for (const entity of this.queries.moving.results) {
       const velocity = entity.getComponent(Velocity)!;
       const position = entity.getMutableComponent(Position)!;
@@ -16,7 +27,7 @@ export class MovableSystem extends System {
     for (const entity of this.queries.rotating.results) {
       const angularVelocity = entity.getComponent(AngularVelocity)!;
       const rotation = entity.getMutableComponent(Rotation)!;
-      rotation.rotation += angularVelocity.amount;
+      rotation.angle += angularVelocity.amount;
     }
   }
 

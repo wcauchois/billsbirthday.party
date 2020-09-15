@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { World } from "ecsy";
 
-import { Sized } from "./components/Sized";
+import { BoundingBox } from "./components/BoundingBox";
 import { Velocity } from "./components/Velocity";
 import { Bouncable } from "./components/Bouncable";
 import { Position } from "./components/Position";
@@ -57,12 +57,20 @@ export default function MainGame() {
     const canvas = canvasRef.current;
     const inputManager = new InputManager(canvas).addListeners();
 
+    let paused = false;
+    const keydownListener =  (evt: KeyboardEvent) => {
+      if (evt.key === 'p') {
+        paused = !paused;
+      }
+    };
+    window.addEventListener('keydown', keydownListener);
+
     const world = new World();
     world
       .registerComponent(Velocity)
       .registerComponent(Position)
       .registerComponent(Shape)
-      .registerComponent(Sized)
+      .registerComponent(BoundingBox)
       .registerComponent(Bouncable)
       .registerComponent(Renderable)
       .registerComponent(Explodable)
@@ -70,7 +78,7 @@ export default function MainGame() {
       .registerComponent(AnimatedSprite)
       .registerComponent(Rotation)
       .registerComponent(AngularVelocity)
-      .registerSystem(MovableSystem)
+      .registerSystem(MovableSystem, { getPaused: () => paused })
       .registerSystem(ExplodableSystem, { inputManager })
       .registerSystem(RendererSystem, { canvas })
       .registerSystem(ConfettiParticleRendererSystem, { canvas })
@@ -80,9 +88,11 @@ export default function MainGame() {
     world
       .createEntity()
       .addComponent(Position, { x: 100, y: 100 })
-      .addComponent(Rotation, { rotation: 0 })
+      .addComponent(Rotation, { angle: 0 })
       .addComponent(AngularVelocity, { amount: 0.01 })
       .addComponent(Velocity, { x: 0.1, y: 0.1 })
+      .addComponent(BoundingBox, { width: 188, height: 88 })
+      .addComponent(Explodable)
       .addComponent(AnimatedSprite, {
         accumulator: 0,
         speed: 0.01,
@@ -110,6 +120,7 @@ export default function MainGame() {
       .addComponent(Renderable);
       */
 
+
     let animHandle = 0;
     let lastTime = performance.now();
     function run() {
@@ -127,6 +138,7 @@ export default function MainGame() {
     return () => {
       cancelAnimationFrame(animHandle)
       inputManager.removeListeners();
+      window.removeEventListener('keydown', keydownListener);
     };
   }, []);
 

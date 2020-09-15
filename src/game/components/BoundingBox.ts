@@ -1,6 +1,6 @@
 import { Component, Types } from "ecsy";
 
-export class Sized extends Component<Sized> {
+export class BoundingBox extends Component<BoundingBox> {
   width!: number;
   height!: number;
 

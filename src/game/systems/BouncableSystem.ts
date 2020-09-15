@@ -1,5 +1,5 @@
 import { World, System } from "ecsy";
-import { Sized } from "../components/Sized";
+import { BoundingBox } from "../components/BoundingBox";
 import { Velocity } from "../components/Velocity";
 import { Position } from "../components/Position";
 
@@ -15,15 +15,15 @@ export class BouncableSystem extends System {
     for (const entity of this.queries.bouncable.results) {
       const velocity = entity.getMutableComponent(Velocity)!;
       const position = entity.getComponent(Position)!;
-      const sized = entity.getComponent(Sized)!;
+      const boundingBox = entity.getComponent(BoundingBox)!;
 
-      if ((position.x + sized.width / 2 > this.canvas.width && velocity.x > 0) ||
-        (position.x - sized.width / 2 < 0 && velocity.x < 0)) {
+      if ((position.x + boundingBox.width / 2 > this.canvas.width && velocity.x > 0) ||
+        (position.x - boundingBox.width / 2 < 0 && velocity.x < 0)) {
         velocity.x *= -1;
       }
 
-      if ((position.y + sized.height / 2 > this.canvas.height && velocity.y > 0) ||
-        (position.y - sized.height / 2 < 0 && velocity.y < 0)) {
+      if ((position.y + boundingBox.height / 2 > this.canvas.height && velocity.y > 0) ||
+        (position.y - boundingBox.height / 2 < 0 && velocity.y < 0)) {
         velocity.y *= -1;
       }
     }
@@ -31,7 +31,7 @@ export class BouncableSystem extends System {
 
   static queries = {
     bouncable: {
-      components: [Velocity, Position, Sized]
+      components: [Velocity, Position, BoundingBox]
     }
   };
 }

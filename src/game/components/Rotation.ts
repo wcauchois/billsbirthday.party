@@ -1,9 +1,9 @@
 import { Component, Types } from "ecsy";
 
 export class Rotation extends Component<Rotation> {
-  rotation!: number;
+  angle!: number;
 
   static schema = {
-    rotation: { type: Types.Number },
+    angle: { type: Types.Number },
   };
 }
