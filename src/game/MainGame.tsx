@@ -166,7 +166,7 @@ export default function MainGame({ onDone }: MainGameProps) {
       inputManager.removeListeners();
       window.removeEventListener('keydown', keydownListener);
     };
-  }, []);
+  }, [onDone]);
 
   return (
     <canvas width="200" height="200" ref={canvasRef} />
