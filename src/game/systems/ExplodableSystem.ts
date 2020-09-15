@@ -1,10 +1,7 @@
 import { System, World } from "ecsy";
 import { InputManager, ClickEvent } from "../managers/InputManager";
-import { BoundingBox } from "../components/BoundingBox";
 import { Position } from "../components/Position";
 import { Explodable } from "../components/Explodable";
-import { Velocity } from "../components/Velocity";
-import { ConfettiParticle } from "../components/ConfettiParticle";
 import { entityToSat, pointInSat } from "../helpers/collision";
 import { ConfettiParticleBuilder } from "../builders/ConfettiParticleBuilder";
 

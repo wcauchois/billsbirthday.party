@@ -3,7 +3,6 @@ import { Position } from "../components/Position";
 import { Rotation } from "../components/Rotation";
 import { AnimatedSprite } from "../components/AnimatedSprite";
 import { ResourceManager } from "../managers/ResourceManager";
-import { entityToSat } from "../helpers/collision";
 
 export class AnimatedSpriteSystem extends System {
   readonly canvas: HTMLCanvasElement;
