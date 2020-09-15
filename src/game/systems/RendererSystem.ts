@@ -16,7 +16,8 @@ export class RendererSystem extends System {
 
   execute(delta: number, time: number) {
     const ctx = this.canvas.getContext('2d')!;
-    ctx.fillStyle = "#d4d4d4";
+    // ctx.fillStyle = "#d4d4d4";
+    ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     for (const entity of this.queries.renderables.results) {

@@ -27,6 +27,9 @@ import { Rotation } from "./components/Rotation";
 import { AngularVelocity } from "./components/AngularVelocity";
 import { Decaying } from "./components/Decaying";
 import { DecayingSystem } from "./systems/DecayingSystem";
+import { AsteroidBuilder } from "./builders/AsteroidBuilder";
+import { Important } from "./components/Important";
+import { ImportantSystem } from "./systems/ImportantSystem";
 const twentyTwentyFrames = [
   twentyTwenty0,
   twentyTwenty1,
@@ -35,7 +38,11 @@ const twentyTwentyFrames = [
   twentyTwenty4,
 ];
 
-export default function MainGame() {
+interface MainGameProps {
+  onDone(): void;
+}
+
+export default function MainGame({ onDone }: MainGameProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -80,8 +87,10 @@ export default function MainGame() {
       .registerComponent(AnimatedSprite)
       .registerComponent(Rotation)
       .registerComponent(Decaying)
+      .registerComponent(Important)
       .registerComponent(AngularVelocity)
       .registerSystem(DecayingSystem)
+      .registerSystem(ImportantSystem, { onDone })
       .registerSystem(MovableSystem, { getPaused: () => paused })
       .registerSystem(ExplodableSystem, { inputManager })
       .registerSystem(RendererSystem, { canvas })
@@ -89,6 +98,18 @@ export default function MainGame() {
       .registerSystem(AnimatedSpriteSystem, { canvas })
       .registerSystem(BouncableSystem, { canvas });
 
+    AsteroidBuilder.start(canvas)
+      .frames(...twentyTwentyFrames)
+      .width(188)
+      .height(88)
+      .addToWorld(world);
+
+    AsteroidBuilder.start(canvas)
+      .frames(...twentyTwentyFrames)
+      .width(188)
+      .height(88)
+      .addToWorld(world);
+      /*
     world
       .createEntity()
       .addComponent(Position, { x: 100, y: 100 })
@@ -102,6 +123,7 @@ export default function MainGame() {
         speed: 0.01,
         frames: twentyTwentyFrames
       });
+      */
       /*
     world
       .createEntity()
