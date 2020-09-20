@@ -24,6 +24,7 @@ import { DecayingSystem } from "./systems/DecayingSystem";
 import { AsteroidBuilder } from "./builders/AsteroidBuilder";
 import { Important } from "./components/Important";
 import { ImportantSystem } from "./systems/ImportantSystem";
+import { SoundManager } from "./managers/SoundManager";
 
 import sars from "../images/sars-transparent.png";
 import twentyTwenty0 from '../images/2020/frame-0.png';
@@ -69,6 +70,7 @@ export default function MainGame({ onDone }: MainGameProps) {
     }
     const canvas = canvasRef.current;
     const inputManager = new InputManager(canvas).addListeners();
+    SoundManager.get().preload();
 
     let paused = false;
     const keydownListener =  (evt: KeyboardEvent) => {

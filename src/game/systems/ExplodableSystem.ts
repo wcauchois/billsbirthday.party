@@ -4,6 +4,7 @@ import { Position } from "../components/Position";
 import { Explodable } from "../components/Explodable";
 import { entityToSat, pointInSat } from "../helpers/collision";
 import { ConfettiParticleBuilder } from "../builders/ConfettiParticleBuilder";
+import { Sound, SoundManager } from "../managers/SoundManager";
 
 export class ExplodableSystem extends System {
   readonly inputManager: InputManager;
@@ -32,6 +33,7 @@ export class ExplodableSystem extends System {
 
         if (hit) {
           entity.remove();
+          SoundManager.get().play(Sound.Explosion);
           for (let i = 0; i < 100; i++) {
             ConfettiParticleBuilder.start()
               .position(position.x, position.y)

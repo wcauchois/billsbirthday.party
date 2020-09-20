@@ -42,4 +42,6 @@ code {
   text-shadow: 1px 1px 2px #fff, 1px 1px 10px #ff3a3a;
   color: #f54848;
   animation: message-anim 0.3s;
+
+  margin: 0 20px;
 }
