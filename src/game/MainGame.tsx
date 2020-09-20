@@ -116,14 +116,14 @@ export default function MainGame({ onDone }: MainGameProps) {
 
     AsteroidBuilder.start(canvas)
       .frames(secondWave)
-      .width(188)
-      .height(88)
+      .width(200)
+      .height(154)
       .addToWorld(world);
 
     AsteroidBuilder.start(canvas)
       .frames(newNormal)
-      .width(100)
-      .height(100)
+      .width(170)
+      .height(112)
       .addToWorld(world);
       /*
     world
