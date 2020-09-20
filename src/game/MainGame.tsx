@@ -17,12 +17,6 @@ import { ConfettiParticle } from "./components/ConfettiParticle";
 import { ConfettiParticleRendererSystem } from "./systems/ConfettiParticleRendererSystem";
 import { AnimatedSpriteSystem } from "./systems/AnimatedSpriteSystem";
 import { AnimatedSprite } from "./components/AnimatedSprite";
-
-import twentyTwenty0 from '../images/2020/frame-0.png';
-import twentyTwenty1 from '../images/2020/frame-1.png';
-import twentyTwenty2 from '../images/2020/frame-2.png';
-import twentyTwenty3 from '../images/2020/frame-3.png';
-import twentyTwenty4 from '../images/2020/frame-4.png';
 import { Rotation } from "./components/Rotation";
 import { AngularVelocity } from "./components/AngularVelocity";
 import { Decaying } from "./components/Decaying";
@@ -32,6 +26,13 @@ import { Important } from "./components/Important";
 import { ImportantSystem } from "./systems/ImportantSystem";
 
 import sars from "../images/sars-transparent.png";
+import twentyTwenty0 from '../images/2020/frame-0.png';
+import twentyTwenty1 from '../images/2020/frame-1.png';
+import twentyTwenty2 from '../images/2020/frame-2.png';
+import twentyTwenty3 from '../images/2020/frame-3.png';
+import twentyTwenty4 from '../images/2020/frame-4.png';
+import newNormal from '../images/new-normal.png';
+import secondWave from '../images/second-wave.png';
 
 const twentyTwentyFrames = [
   twentyTwenty0,
@@ -108,19 +109,19 @@ export default function MainGame({ onDone }: MainGameProps) {
       .addToWorld(world);
 
     AsteroidBuilder.start(canvas)
-      .frames(...twentyTwentyFrames)
-      .width(188)
-      .height(88)
-      .addToWorld(world);
-
-    AsteroidBuilder.start(canvas)
       .frames(sars)
       .width(100)
       .height(100)
       .addToWorld(world);
 
     AsteroidBuilder.start(canvas)
-      .frames(sars)
+      .frames(secondWave)
+      .width(188)
+      .height(88)
+      .addToWorld(world);
+
+    AsteroidBuilder.start(canvas)
+      .frames(newNormal)
       .width(100)
       .height(100)
       .addToWorld(world);
