@@ -15,8 +15,8 @@ export class ConfettiParticleBuilder {
 
   private constructor() {}
 
-  static readonly StartColor = `#ce37e0`;
-  static readonly EndColor = `#5f1bb9`;
+  static readonly StartColor = `rgb(255,253,84)`;
+  static readonly EndColor = `rgb(187,76,32)`;
 
   static start() {
     return new ConfettiParticleBuilder();
